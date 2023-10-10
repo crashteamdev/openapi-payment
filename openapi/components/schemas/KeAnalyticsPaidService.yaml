@@ -2,7 +2,7 @@ description: KazanExpress аналитика
 required:
   - plan
 allOf:
-  - $ref: ./PurchaseService.yaml
+  - $ref: ./PaidService.yaml
   - properties:
       plan:
         type: string
