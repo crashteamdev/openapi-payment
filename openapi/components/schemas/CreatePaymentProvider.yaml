@@ -1,0 +1,12 @@
+type: object
+required:
+  - provider
+discriminator:
+  propertyName: provider
+  mapping:
+    freekassa: ./FreekassaPaymentProvider.yaml
+properties:
+  provider:
+    type: string
+    enum:
+      - freekassa

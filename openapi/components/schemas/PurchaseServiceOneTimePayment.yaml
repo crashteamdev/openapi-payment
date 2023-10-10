@@ -1,0 +1,12 @@
+description: Оплата сервиса с текущего баланса пользователя
+allOf:
+  - $ref: ./PurchaseService.yaml
+  - properties:
+      successRedirectUrl:
+        type: string
+        description: Адрес перенаправления при успешном прохождении платежа
+      failRedirectUrl:
+        type: string
+        description: Адрес перенаправления при неуспешном прохождении платежа
+      provider:
+        $ref: ./CreatePaymentProvider.yaml

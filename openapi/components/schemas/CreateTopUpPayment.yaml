@@ -1,0 +1,21 @@
+type: object
+required:
+  - amount
+  - successRedirectUrl
+  - failRedirectUrl
+  - provider
+discriminator:
+  propertyName: provider
+  mapping:
+    freekassa: ./FreekassaPaymentProvider.yaml
+properties:
+  amount:
+    $ref: ./Amount.yaml
+  successRedirectUrl:
+    type: string
+    description: Адрес перенаправления при успешном прохождении платежа
+  failRedirectUrl:
+    type: string
+    description: Адрес перенаправления при неуспешном прохождении платежа
+  provider:
+    $ref: ./CreatePaymentProvider.yaml

@@ -1,0 +1,8 @@
+type: object
+description: Редирект для проведения платежа
+properties:
+  payment:
+    $ref: ./Payment.yaml
+  redirectUrl:
+    description: Ссылка на которую нужно перенаправить пользователя для дальнейшего проведения платежа
+    type: string

@@ -1,0 +1,13 @@
+type: object
+description: Данные платежа
+properties:
+  paymentId:
+    type: string
+  status:
+    $ref: ./PaymentStatus.yaml
+  amount:
+    $ref: ./Amount.yaml
+  createdAt:
+    description: Дата платежа
+    type: string
+    format: date-time

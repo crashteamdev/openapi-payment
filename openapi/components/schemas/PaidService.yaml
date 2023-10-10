@@ -1,0 +1,16 @@
+type: object
+discriminator:
+  propertyName: context
+  mapping:
+    ke-analytics: ./KeAnalyticsPaidService.yaml
+    uzum-analytics: ./UzumAnalyticsPaidService.yaml
+    ke-repricer: ./KeRepricerPaidService.yaml
+    uzum-repricer: ./UzumRepricerPaidService.yaml
+properties:
+  context:
+    type: string
+    enum:
+      - ke-analytics
+      - uzum-analytics
+      - ke-repricer
+      - uzum-repricer

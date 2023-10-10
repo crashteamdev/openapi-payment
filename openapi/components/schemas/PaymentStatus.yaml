@@ -1,0 +1,7 @@
+type: string
+description: Статус платежа
+enum:
+  - pending
+  - success
+  - canceled
+  - failed

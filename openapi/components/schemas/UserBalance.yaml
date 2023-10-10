@@ -1,0 +1,4 @@
+description: Баланс пользователя
+type: number
+format: double
+example: 1000,00

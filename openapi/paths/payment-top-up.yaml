@@ -1,0 +1,29 @@
+post:
+  summary: Пополнить баланс пользователя
+  description: |
+    Пополнение баланса пользователя. Создание платежа через указанного провайдера
+  operationId: createPayment
+  security:
+    - bearer: []
+  tags:
+    - payment
+  parameters:
+    - $ref: ../components/parameters/requestId.yaml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/CreateTopUpPayment.yaml
+  responses:
+    '201':
+      description: Создан платеж
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/PaymentRedirect.yaml
+    '400':
+      $ref: '../components/responses/BadRequest.yaml'
+    '401':
+      $ref: ../components/responses/Unauthorized.yaml
+    '403':
+      $ref: ../components/responses/Forbidden.yaml

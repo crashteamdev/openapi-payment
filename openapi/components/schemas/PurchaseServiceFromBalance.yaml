@@ -1,0 +1,3 @@
+description: Оплата сервиса с текущего баланса пользователя
+allOf:
+  - $ref: ./PurchaseService.yaml

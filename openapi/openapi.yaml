@@ -1,0 +1,38 @@
+openapi: 3.0.0
+info:
+  version: 0.0.1
+  title: CrashTeam payment API
+  description:
+    $ref: './docs/api.md'
+  termsOfService: http://marketdb.ru/terms-of-use/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+  - url: 'https://{subdomain}.marketdb.pro/{version}'
+    variables:
+      subdomain:
+        default: api
+      version:
+        enum:
+          - v1
+        default: v1
+security:
+  - bearer: []
+paths:
+  '/payments/topup':
+    $ref: './paths/payment-top-up.yaml'
+  '/payments/purchase':
+    $ref: './paths/payment-purchase-service.yaml'
+  '/payments':
+    $ref: './paths/payments.yaml'
+  '/payments/user/balance':
+    $ref: './paths/payment-user-balance.yaml'
+  '/promo-code':
+    $ref: './paths/promocode.yaml'
+  '/promo-code/{promoCode}/check':
+    $ref: './paths/promocode-check@{promoCode}.yaml'
+components:
+  securitySchemes:
+    bearer:
+      $ref: './components/security-schemes/Bearer.yaml'

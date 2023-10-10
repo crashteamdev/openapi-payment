@@ -1,0 +1,13 @@
+description: KazanExpress аналитика
+required:
+  - plan
+allOf:
+  - $ref: ./PurchaseService.yaml
+  - properties:
+      plan:
+        type: string
+        enum:
+          - default
+          - advanced
+          - pro
+

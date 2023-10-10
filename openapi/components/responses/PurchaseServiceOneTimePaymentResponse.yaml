@@ -1,0 +1,4 @@
+description: Результат единовременной оплаты
+allOf:
+  - $ref: ./PurchaseServiceResponse.yaml
+  - $ref: ../schemas/PaymentRedirect.yaml

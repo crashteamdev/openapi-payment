@@ -1,0 +1,4 @@
+description: Сумма
+type: number
+format: double
+example: 10,00

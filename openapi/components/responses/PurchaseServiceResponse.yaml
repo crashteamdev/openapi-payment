@@ -1,0 +1,14 @@
+type: object
+discriminator:
+  propertyName: method
+  mapping:
+    from-balance: ./PurchaseServiceFromBalanceResponse.yaml
+    one-time: ./PurchaseServiceOneTimePaymentResponse.yaml
+properties:
+  balance:
+    $ref: ../schemas/UserBalance.yaml
+  method:
+    type: string
+    enum:
+      - from-balance
+      - one-time

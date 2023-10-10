@@ -1,0 +1,9 @@
+description: Результат единовременной оплаты
+allOf:
+  - $ref: ./PurchaseServiceResponse.yaml
+  - properties:
+      code:
+        type: string
+        enum:
+          - successfully_debit
+          - insufficient_funds

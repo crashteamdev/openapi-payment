@@ -1,0 +1,10 @@
+type: object
+discriminator:
+  propertyName: type
+  mapping:
+    discount: ./DiscountPromoCode.yaml
+properties:
+  type:
+    type: string
+    enum:
+      - discount

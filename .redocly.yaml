@@ -1,0 +1,9 @@
+apis:
+  main@v1:
+    root: ./openapi/openapi.yaml
+extends:
+  - recommended
+theme:
+  openapi:
+    pagination: section
+    showConsole: true

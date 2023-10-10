@@ -1,0 +1,29 @@
+post:
+  summary: Приобрести сервис
+  description: |
+    Оплата выбранного сервиса с баланса, либо создание платежа на единовременную оплату
+  operationId: purchaseService
+  security:
+    - bearer: []
+  tags:
+    - payment
+  parameters:
+    - $ref: ../components/parameters/requestId.yaml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/PurchaseService.yaml
+  responses:
+    '200':
+      description: Результат приобретения сервиса
+      content:
+        application/json:
+          schema:
+            $ref: ../components/responses/PurchaseServiceResponse.yaml
+    '400':
+      $ref: '../components/responses/BadRequest.yaml'
+    '401':
+      $ref: ../components/responses/Unauthorized.yaml
+    '403':
+      $ref: ../components/responses/Forbidden.yaml

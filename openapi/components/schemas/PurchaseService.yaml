@@ -1,0 +1,22 @@
+type: object
+required:
+  - service
+  - multiply
+  - method
+discriminator:
+  propertyName: method
+  mapping:
+    from-balance: ./PurchaseServiceFromBalance.yaml
+    one-time: ./PurchaseServiceOneTimePayment.yaml
+properties:
+  service:
+    $ref: ./PaidService.yaml
+  multiply:
+    type: string
+    description: На какое кол-во месяцев приобретается сервис
+    example: 1
+  method:
+    type: string
+    enum:
+      - from-balance
+      - one-time

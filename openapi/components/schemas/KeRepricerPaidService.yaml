@@ -1,0 +1,11 @@
+description: KazanExpress сервис отслеживания цен
+required:
+  - plan
+allOf:
+  - $ref: ./PurchaseService.yaml
+  - properties:
+      plan:
+        type: string
+        enum:
+          - default
+
