@@ -11,6 +11,9 @@ discriminator:
 properties:
   service:
     $ref: ./PaidService.yaml
+  promoCode:
+    type: string
+    description: Промокод примененный для оплаты сервиса
   multiply:
     type: string
     description: На какое кол-во месяцев приобретается сервис
