@@ -174,10 +174,8 @@
                                     <generatorName>spring</generatorName>
                                     <configOptions>
                                         <dateLibrary>java8</dateLibrary>
+                                        <reactive>true</reactive>
                                     </configOptions>
-                                    <globalProperties>
-                                        <skipFormModel>false</skipFormModel>
-                                    </globalProperties>
                                     <apiPackage>${default.package}.api</apiPackage>
                                     <modelPackage>${default.package}.model</modelPackage>
                                     <skipValidateSpec>true</skipValidateSpec>
@@ -210,9 +208,6 @@
                                     <configOptions>
                                         <dateLibrary>java8</dateLibrary>
                                     </configOptions>
-                                    <globalProperties>
-                                        <skipFormModel>false</skipFormModel>
-                                    </globalProperties>
 
                                     <library>resttemplate</library>
 
