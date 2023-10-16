@@ -21,6 +21,8 @@
     <properties>
         <default.package>dev.crashteam.openapi.payment</default.package>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.build.sourceDirectory>${project.basedir}/src/main/kotlin</project.build.sourceDirectory>
+        <project.build.testSourceDirectory>${project.basedir}/src/test/kotlin</project.build.testSourceDirectory>
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <slf4j-version>2.0.7</slf4j-version>
         <junit-version>4.12</junit-version>
