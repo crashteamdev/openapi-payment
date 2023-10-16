@@ -4,10 +4,6 @@ required:
   - successRedirectUrl
   - failRedirectUrl
   - provider
-discriminator:
-  propertyName: provider
-  mapping:
-    freekassa: ./FreekassaPaymentProvider.yaml
 properties:
   amount:
     $ref: ./Amount.yaml

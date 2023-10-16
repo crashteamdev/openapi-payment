@@ -21,8 +21,6 @@
     <properties>
         <default.package>dev.crashteam.openapi.payment</default.package>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.build.sourceDirectory>${project.basedir}/src/main/kotlin</project.build.sourceDirectory>
-        <project.build.testSourceDirectory>${project.basedir}/src/test/kotlin</project.build.testSourceDirectory>
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <slf4j-version>2.0.7</slf4j-version>
         <junit-version>4.12</junit-version>
@@ -173,11 +171,13 @@
                                 </goals>
                                 <configuration>
                                     <inputSpec>web_deploy/openapi.yaml</inputSpec>
-                                    <generatorName>kotlin-spring</generatorName>
+                                    <generatorName>spring</generatorName>
                                     <configOptions>
                                         <dateLibrary>java8</dateLibrary>
-                                        <reactive>true</reactive>
                                     </configOptions>
+                                    <globalProperties>
+                                        <skipFormModel>false</skipFormModel>
+                                    </globalProperties>
                                     <apiPackage>${default.package}.api</apiPackage>
                                     <modelPackage>${default.package}.model</modelPackage>
                                     <skipValidateSpec>true</skipValidateSpec>
@@ -205,14 +205,16 @@
                                 <configuration>
                                     <inputSpec>web_deploy/openapi.yaml</inputSpec>
 
-                                    <generatorName>kotlin</generatorName>
+                                    <generatorName>java</generatorName>
 
                                     <configOptions>
                                         <dateLibrary>java8</dateLibrary>
-                                        <serializationLibrary>jackson</serializationLibrary>
                                     </configOptions>
+                                    <globalProperties>
+                                        <skipFormModel>false</skipFormModel>
+                                    </globalProperties>
 
-                                    <library>jvm-spring-webclient</library>
+                                    <library>resttemplate</library>
 
                                     <apiPackage>${default.package}.api</apiPackage>
                                     <modelPackage>${default.package}.model</modelPackage>

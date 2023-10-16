@@ -14,6 +14,7 @@ properties:
     type: string
     description: Префикс для промокода
     example: MDB-
+    writeOnly: true
   description:
     type: string
   validUntil:
