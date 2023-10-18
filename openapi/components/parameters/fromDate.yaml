@@ -1,0 +1,6 @@
+name: fromDate
+in: query
+description: Start date.
+required: true
+schema:
+  $ref: '../schemas/Date.yaml'

@@ -1,0 +1,6 @@
+name: toDate
+in: query
+description: End date.
+required: true
+schema:
+  $ref: '../schemas/Date.yaml'
