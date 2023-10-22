@@ -1,0 +1,6 @@
+type: object
+minProperties: 1
+properties:
+  message:
+    description: Описание ошибки
+    type: string

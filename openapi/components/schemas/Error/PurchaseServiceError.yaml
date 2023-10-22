@@ -1,0 +1,8 @@
+allOf:
+  - $ref: ./BaseError.yaml
+  - type: object
+    properties:
+      errorCode:
+        type: string
+        enum:
+          - insufficient_funds
