@@ -7,3 +7,5 @@ allOf:
         enum:
           - successfully_debit
           - insufficient_funds
+      balance:
+        $ref: ../schemas/UserBalance.yaml

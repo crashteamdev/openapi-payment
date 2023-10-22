@@ -5,8 +5,6 @@ discriminator:
     from-balance: ./PurchaseServiceFromBalanceResponse.yaml
     one-time: ./PurchaseServiceOneTimePaymentResponse.yaml
 properties:
-  balance:
-    $ref: ../schemas/UserBalance.yaml
   method:
     type: string
     enum:
