@@ -5,8 +5,10 @@ discriminator:
   propertyName: provider
   mapping:
     freekassa: ./FreekassaPaymentProvider.yaml
+    uz-click: ./UzClickPaymentProvider.yaml
 properties:
   provider:
     type: string
     enum:
       - freekassa
+      - uz-click
