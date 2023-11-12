@@ -1,4 +1,8 @@
 description: Оплата сервиса с текущего баланса пользователя
+required:
+  - successRedirectUrl
+  - failRedirectUrl
+  - provider
 allOf:
   - $ref: ./PurchaseService.yaml
   - properties:
