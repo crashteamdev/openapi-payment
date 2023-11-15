@@ -4,11 +4,13 @@ required:
 discriminator:
   propertyName: provider
   mapping:
-    freekassa: ./FreekassaPaymentProvider.yaml
-    uz-click: ./UzClickPaymentProvider.yaml
+    freekassa: ./Provider/FreekassaPaymentProvider.yaml
+    uz-click: ./Provider/UzClickPaymentProvider.yaml
+    lava: ./Provider/LavaPaymentProvider.yaml
 properties:
   provider:
     type: string
     enum:
       - freekassa
       - uz-click
+      - lava
