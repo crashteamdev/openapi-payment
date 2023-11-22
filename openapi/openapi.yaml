@@ -32,6 +32,8 @@ paths:
     $ref: './paths/promocode.yaml'
   '/promo-code/{promoCode}/check':
     $ref: './paths/promocode-check@{promoCode}.yaml'
+  '/exchange-rate':
+    $ref: './paths/exchange-rate.yaml'
 components:
   securitySchemes:
     bearer:

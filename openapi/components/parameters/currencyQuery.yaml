@@ -1,0 +1,7 @@
+name: currency
+in: query
+description: Currency symbolic code ISO 4217.
+example: RUB
+schema:
+  type: string
+  pattern: "^[A-Z]{3}$"

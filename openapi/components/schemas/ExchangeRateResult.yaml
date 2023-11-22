@@ -1,0 +1,7 @@
+type: object
+description: Результат получения текущего курса запрашиваемой валюты по отношению к USD
+properties:
+  exchangeRate:
+    type: number
+    format: double
+    example: 88.23

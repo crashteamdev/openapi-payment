@@ -1,0 +1,23 @@
+get:
+  summary: Проверить курс валют по отношению к USD
+  operationId: currencyExchangeRate
+  security:
+    - bearer: []
+  tags:
+    - exchange
+  parameters:
+    - $ref: ../components/parameters/requestId.yaml
+    - $ref: ../components/parameters/currencyQuery.yaml
+  responses:
+    '200':
+      description: Текущий курс по отношению к USD
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/ExchangeRateResult.yaml'
+    '400':
+      $ref: '../components/responses/BadRequest.yaml'
+    '401':
+      $ref: ../components/responses/Unauthorized.yaml
+    '403':
+      $ref: ../components/responses/Forbidden.yaml
