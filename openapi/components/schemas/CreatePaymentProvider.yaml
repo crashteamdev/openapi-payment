@@ -7,6 +7,7 @@ discriminator:
     freekassa: ./Provider/FreekassaPaymentProvider.yaml
     uz-click: ./Provider/UzClickPaymentProvider.yaml
     lava: ./Provider/LavaPaymentProvider.yaml
+    enot: ./Provider/EnotPaymentProvider.yaml
 properties:
   provider:
     type: string
@@ -14,3 +15,4 @@ properties:
       - freekassa
       - uz-click
       - lava
+      - enot

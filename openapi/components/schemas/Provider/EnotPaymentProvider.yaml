@@ -1,0 +1,3 @@
+description: Enot payment provider
+allOf:
+  - $ref: ../CreatePaymentProvider.yaml
