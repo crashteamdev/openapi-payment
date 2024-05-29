@@ -1,6 +1,6 @@
 type: object
 required:
-  - service
+  - services
   - multiply
   - method
 discriminator:
@@ -9,8 +9,9 @@ discriminator:
     from-balance: ./PurchaseServiceFromBalance.yaml
     one-time: ./PurchaseServiceOneTimePayment.yaml
 properties:
-  service:
-    $ref: ./PaidService.yaml
+  services:
+    items:
+      - $ref: ./PaidService.yaml
   promoCode:
     type: string
     description: Промокод примененный для оплаты сервиса
@@ -23,3 +24,5 @@ properties:
     enum:
       - from-balance
       - one-time
+  service:
+    $ref: ./DeprecatedPaidService.yaml
