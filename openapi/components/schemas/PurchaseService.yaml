@@ -10,8 +10,9 @@ discriminator:
     one-time: ./PurchaseServiceOneTimePayment.yaml
 properties:
   services:
+    type: array
     items:
-      - $ref: ./PaidService.yaml
+      $ref: ./PaidService.yaml
   promoCode:
     type: string
     description: Промокод примененный для оплаты сервиса
