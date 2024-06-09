@@ -26,4 +26,4 @@ properties:
       - from-balance
       - one-time
   service:
-    $ref: ./DeprecatedPaidService.yaml
+    $ref: ./PaidService.yaml
