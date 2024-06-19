@@ -12,3 +12,6 @@ properties:
   message:
     description: Описание результата проверки
     type: string
+  discountPercentage:
+    description: Процент скидки
+    type: number
