@@ -8,6 +8,7 @@ discriminator:
     uz-click: ./Provider/UzClickPaymentProvider.yaml
     lava: ./Provider/LavaPaymentProvider.yaml
     enot: ./Provider/EnotPaymentProvider.yaml
+    yookassa: ./Provider/YooKassaProvider.yaml
 properties:
   provider:
     type: string
