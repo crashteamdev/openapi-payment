@@ -27,3 +27,5 @@ properties:
       - one-time
   service:
     $ref: ./PaidService.yaml
+  savePaymentMethod:
+    type: boolean
