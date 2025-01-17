@@ -1,4 +1,4 @@
-description: Оплата сервиса с текущего баланса пользователя
+description: Оплата сервиса с выставлением счета пользователю
 required:
   - successRedirectUrl
   - failRedirectUrl
@@ -12,5 +12,7 @@ allOf:
       failRedirectUrl:
         type: string
         description: Адрес перенаправления при неуспешном прохождении платежа
+      savePaymentMethod:
+        type: boolean
       provider:
         $ref: ./CreatePaymentProvider.yaml
