@@ -1,5 +1,5 @@
 post:
-  summary: Приобрести сервис
+  summary: Отменить подписку
   description: |
     Отмена подписки
   operationId: cancelRecurrentPayment
