@@ -4,9 +4,11 @@ discriminator:
   mapping:
     from-balance: ./PurchaseServiceFromBalanceResponse.yaml
     one-time: ./PurchaseServiceOneTimePaymentResponse.yaml
+    recurrent: ./PurchaseServiceRecurrentPaymentResponse.yaml
 properties:
   method:
     type: string
     enum:
       - from-balance
       - one-time
+      - recurrent
