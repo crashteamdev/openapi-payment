@@ -1,0 +1,746 @@
+openapi: 3.0.0
+info:
+  version: 0.0.1
+  title: CrashTeam payment API
+  description: |
+    CrashTeam Dev Uzum Analytics API
+  termsOfService: http://marketdb.ru/terms-of-use/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+  - url: https://{subdomain}.marketdb.pro/{version}
+    variables:
+      subdomain:
+        default: api
+      version:
+        enum:
+          - v1
+        default: v1
+security:
+  - bearer: []
+paths:
+  /payments/topup:
+    post:
+      summary: Пополнить баланс пользователя
+      description: |
+        Пополнение баланса пользователя. Создание платежа через указанного провайдера
+      operationId: createPayment
+      security:
+        - bearer: []
+      tags:
+        - payment
+      parameters:
+        - $ref: '#/components/parameters/requestId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTopUpPayment'
+      responses:
+        '201':
+          description: Создан платеж
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentRedirect'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /payments/purchase:
+    post:
+      summary: Приобрести сервис
+      description: |
+        Оплата выбранного сервиса с баланса, либо создание платежа на единовременную оплату
+      operationId: purchaseService
+      security:
+        - bearer: []
+      tags:
+        - payment
+      parameters:
+        - $ref: '#/components/parameters/requestId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PurchaseService'
+      responses:
+        '200':
+          description: Результат приобретения сервиса
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PurchaseServiceResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/PurchaseServiceErrorResponse'
+  /payments:
+    get:
+      summary: Получить список платежей пользователя
+      operationId: getPayments
+      security:
+        - bearer: []
+      tags:
+        - user
+      parameters:
+        - $ref: '#/components/parameters/requestId'
+        - $ref: '#/components/parameters/fromDate'
+        - $ref: '#/components/parameters/toDate'
+        - $ref: '#/components/parameters/collectionLimit'
+        - $ref: '#/components/parameters/collectionOffset'
+      responses:
+        '200':
+          description: Список платежей пользователя
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Payment'
+          headers:
+            Pagination-Total:
+              $ref: '#/components/headers/Pagination-Total'
+            Pagination-Limit:
+              $ref: '#/components/headers/Pagination-Limit'
+            Pagination-Offset:
+              $ref: '#/components/headers/Pagination-Offset'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /payments/user/balance:
+    get:
+      summary: Получить текущий баланс пользователя
+      operationId: getUserBalance
+      security:
+        - bearer: []
+      tags:
+        - user
+      parameters:
+        - $ref: '#/components/parameters/requestId'
+      responses:
+        '200':
+          description: Список платежей пользователя
+          content:
+            application/json:
+              schema:
+                properties:
+                  amount:
+                    $ref: '#/components/schemas/UserBalance'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /payments/user/recurrent/cancel:
+    post:
+      summary: Отменить подписку
+      description: |
+        Отменить рекуррентные платежи для пользователя. Отменяет рекуррентные платежи по текущей подписки пользователя
+      operationId: cancelRecurrentPayment
+      security:
+        - bearer: []
+      tags:
+        - payment
+      parameters:
+        - $ref: '#/components/parameters/requestId'
+      responses:
+        '200':
+          description: Рекуррентные платежи по подписке отменены
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /promo-code:
+    post:
+      summary: Создать промокод
+      description: |
+        Создание промокода (только для администраторов)
+      operationId: createPromoCode
+      security:
+        - bearer: []
+      tags:
+        - promo
+      parameters:
+        - $ref: '#/components/parameters/requestId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PromoCode'
+      responses:
+        '201':
+          description: Создан промокод
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PromoCode'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /promo-code/{promoCode}/check:
+    get:
+      summary: Проверить промокод
+      operationId: checkPromoCode
+      security:
+        - bearer: []
+      tags:
+        - promo
+      parameters:
+        - $ref: '#/components/parameters/requestId'
+        - $ref: '#/components/parameters/promoCodePath'
+      responses:
+        '200':
+          description: Результат проверки промокода
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PromoCodeCheckResult'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /exchange-rate:
+    get:
+      summary: Проверить курс валют по отношению к USD
+      operationId: currencyExchangeRate
+      security:
+        - bearer: []
+      tags:
+        - exchange
+      parameters:
+        - $ref: '#/components/parameters/requestId'
+        - $ref: '#/components/parameters/currencyQuery'
+      responses:
+        '200':
+          description: Текущий курс по отношению к USD
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExchangeRateResult'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+components:
+  securitySchemes:
+    bearer:
+      description: |
+        Для аутентификации вызовов мы используем [JWT](https://jwt.io). Cоответствующий ключ передается в заголовке.
+        ```shell
+          Authorization: Bearer {TOKENIZATION|PRIVATE_JWT}
+        ```
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  parameters:
+    requestId:
+      name: X-Request-ID
+      in: header
+      description: Уникальный идентификатор запроса к системе
+      required: true
+      schema:
+        type: string
+        format: uuid
+    fromDate:
+      name: fromDate
+      in: query
+      description: Start date.
+      required: true
+      schema:
+        $ref: '#/components/schemas/Date'
+    toDate:
+      name: toDate
+      in: query
+      description: End date.
+      required: true
+      schema:
+        $ref: '#/components/schemas/Date'
+    collectionLimit:
+      name: limit
+      in: query
+      description: The collection items limit.
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 1000
+    collectionOffset:
+      name: offset
+      in: query
+      description: The collection items offset.
+      schema:
+        type: integer
+        minimum: 0
+    promoCodePath:
+      name: promoCode
+      in: path
+      required: true
+      schema:
+        type: string
+    currencyQuery:
+      name: currency
+      in: query
+      description: Currency symbolic code ISO 4217.
+      example: RUB
+      schema:
+        type: string
+        pattern: ^[A-Z]{3}$
+  schemas:
+    Amount:
+      description: Сумма
+      type: number
+      format: double
+      example: 10,00
+    CreatePaymentProvider:
+      type: object
+      required:
+        - provider
+      discriminator:
+        propertyName: provider
+        mapping:
+          freekassa: '#/components/schemas/FreekassaPaymentProvider'
+          uz-click: '#/components/schemas/UzClickPaymentProvider'
+          lava: '#/components/schemas/LavaPaymentProvider'
+          enot: '#/components/schemas/EnotPaymentProvider'
+          yookassa: '#/components/schemas/YooKassaPaymentProvider'
+          tbank: '#/components/schemas/TBankPaymentProvider'
+      properties:
+        provider:
+          type: string
+          enum:
+            - freekassa
+            - uz-click
+            - lava
+            - enot
+            - yookassa
+            - tbank
+    FreekassaPaymentProvider:
+      description: Freekassa payment provider
+      allOf:
+        - $ref: '#/components/schemas/CreatePaymentProvider'
+    UzClickPaymentProvider:
+      description: Uzbekistan Click payment provider
+      allOf:
+        - $ref: '#/components/schemas/CreatePaymentProvider'
+    LavaPaymentProvider:
+      description: Lava payment provider
+      allOf:
+        - $ref: '#/components/schemas/CreatePaymentProvider'
+    EnotPaymentProvider:
+      description: Enot payment provider
+      allOf:
+        - $ref: '#/components/schemas/CreatePaymentProvider'
+    YooKassaPaymentProvider:
+      description: YooKassa payment provider
+      allOf:
+        - $ref: '#/components/schemas/CreatePaymentProvider'
+    TBankPaymentProvider:
+      description: TBank payment provider
+      allOf:
+        - $ref: '#/components/schemas/CreatePaymentProvider'
+    CreateTopUpPayment:
+      type: object
+      required:
+        - amount
+        - successRedirectUrl
+        - failRedirectUrl
+        - provider
+      properties:
+        amount:
+          $ref: '#/components/schemas/Amount'
+        successRedirectUrl:
+          type: string
+          description: Адрес перенаправления при успешном прохождении платежа
+        failRedirectUrl:
+          type: string
+          description: Адрес перенаправления при неуспешном прохождении платежа
+        provider:
+          $ref: '#/components/schemas/CreatePaymentProvider'
+    PaymentStatus:
+      type: string
+      description: Статус платежа
+      enum:
+        - pending
+        - success
+        - canceled
+        - failed
+    Payment:
+      type: object
+      description: Данные платежа
+      properties:
+        paymentId:
+          type: string
+        status:
+          $ref: '#/components/schemas/PaymentStatus'
+        amount:
+          $ref: '#/components/schemas/Amount'
+        createdAt:
+          description: Дата платежа
+          type: string
+          format: date-time
+    PaymentRedirect:
+      type: object
+      description: Редирект для проведения платежа
+      properties:
+        payment:
+          $ref: '#/components/schemas/Payment'
+        redirectUrl:
+          description: Ссылка на которую нужно перенаправить пользователя для дальнейшего проведения платежа
+          type: string
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+          minimum: 100
+          maximum: 600
+          description: The HTTP status code.
+        error:
+          type: string
+        type:
+          type: string
+          description: A URI reference [[RFC3986](https://tools.ietf.org/html/rfc3986)] that identifies the problem type. It should provide human-readable documentation for the problem type. When this member is not present, its value is assumed to be "about:blank".
+        title:
+          type: string
+          description: A short, human-readable summary of the problem type. It SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
+    PurchaseService:
+      type: object
+      required:
+        - services
+        - multiply
+        - method
+      discriminator:
+        propertyName: method
+        mapping:
+          from-balance: '#/components/schemas/PurchaseServiceFromBalance'
+          one-time: '#/components/schemas/PurchaseServiceOneTimePayment'
+          recurrent: '#/components/schemas/PurchaseServiceRecurrent'
+      properties:
+        services:
+          type: array
+          items:
+            $ref: '#/components/schemas/PaidService'
+        promoCode:
+          type: string
+          description: Промокод примененный для оплаты сервиса
+        multiply:
+          type: string
+          description: На какое кол-во месяцев приобретается сервис
+          example: 1
+        method:
+          type: string
+          enum:
+            - from-balance
+            - one-time
+            - recurrent
+        service:
+          $ref: '#/components/schemas/PaidService'
+    PurchaseServiceFromBalance:
+      description: Оплата сервиса с текущего баланса пользователя
+      allOf:
+        - $ref: '#/components/schemas/PurchaseService'
+    PurchaseServiceOneTimePayment:
+      description: Оплата сервиса с текущего баланса пользователя
+      required:
+        - successRedirectUrl
+        - failRedirectUrl
+        - provider
+      allOf:
+        - $ref: '#/components/schemas/PurchaseService'
+        - properties:
+            successRedirectUrl:
+              type: string
+              description: Адрес перенаправления при успешном прохождении платежа
+            failRedirectUrl:
+              type: string
+              description: Адрес перенаправления при неуспешном прохождении платежа
+            provider:
+              $ref: '#/components/schemas/CreatePaymentProvider'
+    PurchaseServiceRecurrent:
+      description: Оплата сервиса с текущего баланса пользователя
+      required:
+        - successRedirectUrl
+        - failRedirectUrl
+        - provider
+      allOf:
+        - $ref: '#/components/schemas/PurchaseService'
+        - properties:
+            successRedirectUrl:
+              type: string
+              description: Адрес перенаправления при успешном прохождении платежа
+            failRedirectUrl:
+              type: string
+              description: Адрес перенаправления при неуспешном прохождении платежа
+            provider:
+              $ref: '#/components/schemas/CreatePaymentProvider'
+    PaidService:
+      type: object
+      discriminator:
+        propertyName: context
+        mapping:
+          ke-analytics: '#/components/schemas/KeAnalyticsPaidService'
+          uzum-analytics: '#/components/schemas/UzumAnalyticsPaidService'
+          ke-repricer: '#/components/schemas/KeRepricerPaidService'
+          uzum-repricer: '#/components/schemas/UzumRepricerPaidService'
+      properties:
+        context:
+          type: string
+          enum:
+            - ke-analytics
+            - uzum-analytics
+            - ke-repricer
+            - uzum-repricer
+    KeAnalyticsPaidService:
+      description: KazanExpress аналитика
+      required:
+        - plan
+      allOf:
+        - $ref: '#/components/schemas/PaidService'
+        - properties:
+            plan:
+              type: string
+              enum:
+                - default
+                - advanced
+                - pro
+    UzumAnalyticsPaidService:
+      description: Uzum аналитика
+      required:
+        - plan
+      allOf:
+        - $ref: '#/components/schemas/PaidService'
+        - properties:
+            plan:
+              type: string
+              enum:
+                - default
+                - advanced
+                - pro
+    KeRepricerPaidService:
+      description: KazanExpress сервис отслеживания цен
+      required:
+        - plan
+      allOf:
+        - $ref: '#/components/schemas/PaidService'
+        - properties:
+            plan:
+              type: string
+              enum:
+                - default
+    UzumRepricerPaidService:
+      description: Uzum сервис отслеживания цен
+      required:
+        - plan
+      allOf:
+        - $ref: '#/components/schemas/PaidService'
+        - properties:
+            plan:
+              type: string
+              enum:
+                - default
+    PurchaseServiceResponse:
+      type: object
+      discriminator:
+        propertyName: method
+        mapping:
+          from-balance: '#/components/schemas/PurchaseServiceFromBalanceResponse'
+          one-time: '#/components/schemas/PurchaseServiceOneTimePaymentResponse'
+          recurrent: '#/components/schemas/PurchaseServiceRecurrentPaymentResponse'
+      properties:
+        method:
+          type: string
+          enum:
+            - from-balance
+            - one-time
+            - recurrent
+    UserBalance:
+      description: Баланс пользователя
+      type: number
+      format: double
+      example: 1000,00
+    PurchaseServiceFromBalanceResponse:
+      description: Результат единовременной оплаты
+      allOf:
+        - $ref: '#/components/schemas/PurchaseServiceResponse'
+        - properties:
+            code:
+              type: string
+              enum:
+                - successfully_debit
+                - insufficient_funds
+            balance:
+              $ref: '#/components/schemas/UserBalance'
+    PurchaseServiceOneTimePaymentResponse:
+      description: Результат единовременной оплаты
+      allOf:
+        - $ref: '#/components/schemas/PurchaseServiceResponse'
+        - $ref: '#/components/schemas/PaymentRedirect'
+    PurchaseServiceRecurrentPaymentResponse:
+      description: Результат создания рекуррентной оплаты
+      allOf:
+        - $ref: '#/components/schemas/PurchaseServiceResponse'
+        - $ref: '#/components/schemas/PaymentRedirect'
+    BaseError:
+      type: object
+      minProperties: 1
+      properties:
+        message:
+          description: Описание ошибки
+          type: string
+    PurchaseServiceError:
+      allOf:
+        - $ref: '#/components/schemas/BaseError'
+        - type: object
+          properties:
+            errorCode:
+              type: string
+              enum:
+                - insufficient_funds
+    Date:
+      type: string
+      format: date
+    PromoCodeContext:
+      type: object
+      discriminator:
+        propertyName: type
+        mapping:
+          discount: '#/components/schemas/DiscountPromoCode'
+      properties:
+        type:
+          type: string
+          enum:
+            - discount
+    DiscountPromoCode:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/PromoCodeContext'
+        - type: object
+          required:
+            - discount
+          properties:
+            discount:
+              type: integer
+              description: Скидка при покупке
+              minimum: 1
+              maximum: 99
+    PromoCode:
+      description: Промокод для применения при покупке
+      type: object
+      required:
+        - code
+        - description
+        - validUntil
+        - useLimit
+        - context
+      properties:
+        code:
+          type: string
+          readOnly: true
+        prefix:
+          type: string
+          description: Префикс для промокода
+          example: MDB-
+          writeOnly: true
+        description:
+          type: string
+        validUntil:
+          type: string
+          description: Дата окончания действия промокода
+          format: date-time
+        useLimit:
+          type: integer
+          description: Максимальное кол-во использований промокода
+        context:
+          $ref: '#/components/schemas/PromoCodeContext'
+    PromoCodeCheckResult:
+      type: object
+      description: Результат проверки промокода
+      properties:
+        code:
+          description: Код результата проверки
+          type: string
+          enum:
+            - validPromoCode
+            - invalidPromoCodeDate
+            - invalidPromoCodeUseLimit
+            - notFoundPromoCode
+        message:
+          description: Описание результата проверки
+          type: string
+        discountPercentage:
+          description: Процент скидки
+          type: number
+    ExchangeRateResult:
+      type: object
+      description: Результат получения текущего курса запрашиваемой валюты по отношению к USD
+      properties:
+        exchangeRate:
+          type: number
+          format: double
+          example: 88.23
+  responses:
+    BadRequest:
+      description: Переданы ошибочные данные
+      content:
+        application/json:
+          schema:
+            description: Ошибка в переданных данных
+            type: object
+            required:
+              - code
+            properties:
+              code:
+                type: string
+                enum:
+                  - invalidRequest
+              message:
+                type: string
+    Unauthorized:
+      description: Несанкционированный доступ, использовались неверные учетные данные.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Access forbidden.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    PurchaseServiceErrorResponse:
+      description: Неверные данные для проведение покупки сервиса
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PurchaseServiceError'
+  headers:
+    Pagination-Total:
+      description: Total items count.
+      schema:
+        type: integer
+    Pagination-Limit:
+      description: Items per page limit.
+      schema:
+        type: integer
+    Pagination-Offset:
+      description: Pagination offset.
+      schema:
+        type: integer
