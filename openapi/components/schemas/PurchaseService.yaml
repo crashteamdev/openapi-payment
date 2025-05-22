@@ -8,6 +8,7 @@ discriminator:
   mapping:
     from-balance: ./PurchaseServiceFromBalance.yaml
     one-time: ./PurchaseServiceOneTimePayment.yaml
+    recurrent: ./PurchaseServiceRecurrent.yaml
 properties:
   services:
     type: array
@@ -25,5 +26,6 @@ properties:
     enum:
       - from-balance
       - one-time
+      - recurrent
   service:
     $ref: ./PaidService.yaml

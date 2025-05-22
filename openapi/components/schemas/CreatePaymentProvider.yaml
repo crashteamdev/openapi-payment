@@ -9,6 +9,7 @@ discriminator:
     lava: ./Provider/LavaPaymentProvider.yaml
     enot: ./Provider/EnotPaymentProvider.yaml
     yookassa: ./Provider/YooKassaPaymentProvider.yaml
+    tbank: ./Provider/TBankPaymentProvider.yaml
 properties:
   provider:
     type: string
@@ -18,3 +19,4 @@ properties:
       - lava
       - enot
       - yookassa
+      - tbank

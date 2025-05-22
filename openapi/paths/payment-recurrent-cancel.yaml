@@ -1,0 +1,20 @@
+post:
+  summary: Отменить подписку
+  description: |
+    Отменить рекуррентные платежи для пользователя. Отменяет рекуррентные платежи по текущей подписки пользователя
+  operationId: cancelRecurrentPayment
+  security:
+    - bearer: []
+  tags:
+    - payment
+  parameters:
+    - $ref: ../components/parameters/requestId.yaml
+  responses:
+    '200':
+      description: Рекуррентные платежи по подписке отменены
+    '400':
+      $ref: '../components/responses/BadRequest.yaml'
+    '401':
+      $ref: ../components/responses/Unauthorized.yaml
+    '403':
+      $ref: ../components/responses/Forbidden.yaml

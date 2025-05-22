@@ -28,6 +28,8 @@ paths:
     $ref: './paths/payments.yaml'
   '/payments/user/balance':
     $ref: './paths/payment-user-balance.yaml'
+  '/payments/user/recurrent/cancel':
+    $ref: './paths/payment-recurrent-cancel.yaml'
   '/promo-code':
     $ref: './paths/promocode.yaml'
   '/promo-code/{promoCode}/check':
