@@ -1,0 +1,31 @@
+post:
+  summary: Отменить подписку
+  description: |
+    Отмена подписки
+  operationId: cancelRecurrentPayment
+  security:
+    - bearer: []
+  tags:
+    - payment
+  parameters:
+    - $ref: ../components/parameters/requestId.yaml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/CancelRecurrentPaymentRequest.yaml
+  responses:
+    '200':
+      description: Результат отмены подписки
+      content:
+        application/json:
+          schema:
+            $ref: ../components/responses/CancelRecurrentPaymentResponse.yaml
+    '400':
+      $ref: '../components/responses/BadRequest.yaml'
+    '401':
+      $ref: ../components/responses/Unauthorized.yaml
+    '403':
+      $ref: ../components/responses/Forbidden.yaml
+    '422':
+      $ref: ../components/responses/PurchaseServiceErrorResponse.yaml
